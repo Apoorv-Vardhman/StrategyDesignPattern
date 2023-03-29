@@ -1,0 +1,20 @@
+
+In the above example our MessageWriter class is loosely coupled from HtmlConverter or PdfConverter, but those are not completely loosely coupled. because still if my MessageWriter wants to switch from HTML to PDF MessageConverter, we need to modify the code inside the MessageWriter so we cannot call them as completely loosely coupled.
+
+In the above example, the MessageWriter wants to talk to HTML/PDF Message Converter classes, to talk to the Converter classes, it needs the object of other class.
+
+Here if A wants to use the functionality of B then A has to know how to create the object of B and should write logic for instantiating the C and pass it as an input to B
+C c = new C();
+B b = new B(c);
+
+In future if the B has been modifed again we need change the code inside A to modify the process of creating the object of B. The same change needs to be performed by all the classes in our application who are creating the object of B class.
+
+How to solve the above problems?
+To overcome the above problems, the Factory design pattern comes into picture
+Factories are the components or the classes that takes care of creating the object of another class, so that we can avoid creating the objects of other classes and can take the help of Factory for getting the objects
+
+There are 2 advantages we get out of using a Factory
+    1. without using the classname of another class, our class can take the help of factory in getting the object
+    2. without bothering about how to create the object of another class, our classes in the application can get the object of another class using factory
+
+

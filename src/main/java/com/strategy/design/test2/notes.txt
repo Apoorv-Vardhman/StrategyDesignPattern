@@ -1,0 +1,28 @@
+Factory design pattern:
+Factories are used for creating the object of another class, there are 2 main reasons or advantages of using the factory classes.
+1. without using the classname of another class, our class can take the help of factory in getting the object
+2. without bothering about how to create the object of another class, our classes in the application can get the object of another class using factory
+
+class MessageConverterFactory {
+	static IMessageConverter newMessageConverter(String converterType) { # static factory method
+		IMessageConverter messageConverter = null;
+
+		if(converterType.equals("html")) {
+			messageConverter = new HTMLMessageConverterImpl();
+		}else {
+			messageConverter = new PDFMessageConverterImpl();
+		}
+		return messageConverter;
+	}
+}
+
+Dependency Pulling:
+The process of acquiring or taking the dependent object(s) from another class is called dependency pulling. Here MessageWriter is pulling the dependent object (HTML|PDF Converters) from MessageConverterFactory
+In case of pulling, we need to tell the other class which object we want, so that again our class will become tightly coupled through logical classname.
+
+by using the Factory class, we are able to eliminate both problems. Now the MessageWriter dont know
+1. classname of HTML|PDF message converter
+2. dont know how to create the object
+it simply goes to factory in getting the object
+
+The above process of getting the dependent objects by going to other classes of our application is called "dependency pulling". even after using factories we are not able to eliminate the coupling between the classes. Still if my messageWriter wants to switch from HTML to PDF MessageConverter we need to change the logical classname of another class inside MessageWriter. So still MessageWriter is tightly coupled through the logical classname of another class.

@@ -1,0 +1,34 @@
+Why our application components should be loosely coupled completely?
+To understand this, let us explore how and what are the stages in which an application is developed and delivered?
+
+
+if we are writing classname of a java class inside other java class our classes will become tightly coupled, if we want to switch from one class to another class, we need modify the classname inside the java class, which requires
+- recompilation
+- repackaging
+- redeploy and restart the application
+
+more over it takes significant amount of time of testing and certifying the application. So instead write the classname of the java class inside an non-java file.
+
+since there are lot of classes in our application, if we write the classnames inside text file, we cant retrieve or access the classnames easily.
+To access a classname directly we can write in properties file, so that using the identifier as a key we can access the classname easily
+
+appClasses.properties
+----------------------
+messageWriter.class=com.sdp.beans.MessageWriter
+messageConverter.class=com.sdp.beans.PDFMessageConverterImpl
+
+upon writing the classnames we will not get the object of the class, we need to write the logic for reading the properties file and identify the classname based on the key/logical classname and instantiate the object
+
+How to read the properties file in java?
+The properties file holds key/value in string format, so we can read them and populate them into Properties collection. The Properties collection has load method to which we can pass InputStream of the properties file, so that it can read key/value and populate into itself
+
+Properties props = new Properties();
+props.load(new FileInputStream(new File("d:\\appClasses.properties")));
+
+now find for the given logical classname (key), the fully qualified name of the class, so that we can create the object of the class using the fqnClassname.
+
+String fqnClass = props.getProperty(lClassname);
+
+
+Class clazz = Class.forName(fqnClass);
+Object obj = clazz.newInstance();
